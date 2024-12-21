@@ -7,6 +7,10 @@ table{
     border-radius: 8px;
 }
 
+.heading{
+    padding-left:10px;;
+}
+
 tr,td{
     width:34%;
     height:34% ;
