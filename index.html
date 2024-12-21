@@ -4,87 +4,176 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/icon.PNG">
 </head>
-<body>
+    <body>
+        
 
-    <center><h1 style="color: #2F1847;">Game Tic Tac Toe !</h1></center>
-
-    <div>
-    <a href="/multiplayergame.html"><button>Play with your friend</button></a>
-    <a href="/play_with_bot.html"><button>Play with bot</button></a>
-    </div>
-
-    <style>
-
-    a{
-        text-decoration: none;
-    }
+        <h3 style="color: #2F1847;">Player 1 :<span style="color: #D63AF9;">X</span></h3>
+        <h3 style="color: #2F1847;">Player 2 :<span style="color: #c62e65;">O</span></h3>
+        <div id="dialogbox">
+            <div id="dialogbox-content">
+                <p id="resultpara"></p>
+                <button id="playagainbtn" onclick="newgame()">Play again</button>
+            </div>
+        </div>
     
-    body{
-            background-color:#F9B3D1   
-        }
-    
-        h1{
-            margin-top: 80px;
-        }
-        div{
-        width:74%;
-        height:200px ;
-        border:5px solid #2F1847;
-        background-color:#624763;   
-        margin-left: 35px;
-        border-radius: 10px;
-        padding-top: 50px;
-     }
-     button{
-            display: block;
-            width:200px ;
-            margin-left: 25px;
-            padding: 10px;
-            margin-top: 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            color: #624763;
-        }
-
-        button:hover{
-            scale: 1.02;
-            background-color:#624763 ;
-            border:2px solid white;
-            color: white;
-        }
-
-    @media (min-width:801px){
-    
-        div{
-        width:34%;
-        height:215px ;
-        border:5px solid #2F1847;
-        background-color:#624763;   
-        margin-left: 440px;
-        border-radius: 10px;
-        padding-top: 50px;
-     }
-    
-        button{
-            display: block;
-            width:350px ;
-            margin-left: 55px;
-            padding: 10px;
-            margin-top: 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            color: #624763;
-            font-size: 1.2em;
             
-        }
-    
-    
-    }
-    </style>
+        <center>
+        <table>
+            <tr>
+                <td id="cell_1" onclick="insertvalue(event)"></td>
+                <td id="cell_2" onclick="insertvalue(event)"></td>
+                <td id="cell_3" onclick="insertvalue(event)"></td>
+            </tr>
+            <tr>
+                <td id="cell_4" onclick="insertvalue(event)"></td>
+                <td id="cell_5" onclick="insertvalue(event)"></td>
+                <td id="cell_6" onclick="insertvalue(event)"></td>
+            </tr>
+            <tr>
+                <td id="cell_7" onclick="insertvalue(event)"></td>
+                <td id="cell_8" onclick="insertvalue(event)"></td>
+                <td id="cell_9" onclick="insertvalue(event)"></td>
+            </tr>
+        </table>
+    </center>
 
+    <script>
+        let cell_1=document.getElementById("cell_1");
+        let cell_2=document.getElementById("cell_2");
+        let cell_3=document.getElementById("cell_3");
+        let cell_4=document.getElementById("cell_4");
+        let cell_5=document.getElementById("cell_5");
+        let cell_6=document.getElementById("cell_6");
+        let cell_7=document.getElementById("cell_7");
+        let cell_8=document.getElementById("cell_8");
+        let cell_9=document.getElementById("cell_9");
+        
+        let clickcount=1;
+        
+            let arr=[
+                    [cell_1.innerHTML,cell_2.innerHTML,cell_3.innerHTML],
+                    [cell_4.innerHTML,cell_5.innerHTML,cell_6.innerHTML],
+                    [cell_7.innerHTML,cell_8.innerHTML,cell_9.innerHTML],
+                    ]
+        
+        function insertvalue(event){
+                 const cell = event.target;
+            if(cell.innerHTML==""){
+                if(clickcount<10){    
+                    if(clickcount%2!=0){
+                    cell.style.color="#D63AF9";
+                    cell.innerHTML="X";
+                    }
+                    else{
+                    cell.style.color="#c62e65";
+                    cell.innerHTML = "O";
+                    }
+                    clickcount++;
+            }
+        }
+          
+                arr[0][0]=cell_1.innerHTML;
+                arr[0][1]=cell_2.innerHTML;
+                arr[0][2]=cell_3.innerHTML;
+                arr[1][0]=cell_4.innerHTML;
+                arr[1][1]=cell_5.innerHTML;
+                arr[1][2]=cell_6.innerHTML;
+                arr[2][0]=cell_7.innerHTML;
+                arr[2][1]=cell_8.innerHTML;
+                arr[2][2]=cell_9.innerHTML;
+        
+                if(clickcount>=5){
+                    let val = isgameEnd(arr);
+                    if(val=='X'){
+                        displayresult("player1");
+                        return;
+                    }
+                    
+                    else if(val=='O'){
+                    displayresult("player2");
+                    return;
+                    }
+        
+                    else if(val=="draw"){
+                        displayresult("none");
+                        return;
+                    }
+           }
+        }
+        
+        
+            function isgameEnd(arr){
+            let count =0;
+            let temp=arr[0][0];
+            for(let i=0;i<3;i++){
+                if(temp == arr[i][i])count++;
+            }
+            if(count == 3)return temp;
+            count=0;
+        
+        
+            temp =arr[0][2];
+            for(let i=0,j=2;j>=0;i++,j--){
+                if(temp == arr[i][j])count++;
+            }
+             if(count == 3)return temp;
+             
+             let count1=0,count2=0,count3=0,temp1=arr[0][0],temp2=arr[1][0],temp3=arr[2][0];
+             
+             for(let i=0;i<3;i++){
+                if(temp1 == arr[0][i])count1++;
+                if(temp2 == arr[1][i])count2++;
+                if(temp3 == arr[2][i])count3++;
+            }
+            
+             if(count1 == 3)return temp1;
+             else if(count2 == 3)return temp2;
+             else if(count3 == 3)return temp3; 
+             
+             count1=0,count2=0,count3=0,temp1=arr[0][0],temp2=arr[0][1],temp3=arr[0][2];
+            
+             for(let i=0;i<3;i++){
+                if(temp1 == arr[i][0])count1++;
+                if(temp2 == arr[i][1])count2++;
+                if(temp3 == arr[i][2])count3++;
+             }
+             if(count1 == 3)return temp1;if(count2 == 3)return temp2;if(count3 == 3)return temp3; 
+             if(clickcount >= 10)return "draw";
+             return "none";
+            }
+        
+            function displayresult(player){
+                let result = document.getElementById("resultpara"); 
+                if(player != "none")result.innerHTML=`Congrats! ${player} won the game `;
+                else result.innerHTML=`It's a draw!`;
+                let dialogbox =document.getElementById("dialogbox");
+                dialogbox.style.display="block";
+            }
+        
+            function newgame(){
+                cell_1.innerHTML="";cell_2.innerHTML="";cell_3.innerHTML="";
+                cell_4.innerHTML="";cell_5.innerHTML="";cell_6.innerHTML="";
+                cell_7.innerHTML="";cell_8.innerHTML="";cell_9.innerHTML="";
+                arr[0][0]="";arr[0][1]="";arr[0][2]="";
+                arr[1][0]="";arr[1][1]="";arr[1][2]="";
+                arr[2][0]="";arr[2][1]="";arr[2][2]="";
+                let dialogbox =document.getElementById("dialogbox");
+                dialogbox.style.display="none";
+                clickcount=1;
+            }
+            
+            </script>
+            
 
 </body>
-</html>
+
+
+    </html>
+
+
+
+
 
